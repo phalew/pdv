@@ -35,6 +35,11 @@ let s:old_cpo = &cpo
 set cpo&vim
 
 "
+" Some defaults:
+"
+if !exists('g:pdv_cfg_Author') | let g:pdv_cfg_Author = "Roberto Vernina <roberto.vernina@yahoo.it>" | endif
+
+"
 " Regular expressions 
 " 
 
@@ -121,6 +126,7 @@ endfunc
 func! pdv#DocumentLine(lineno)
 	let l:parseconfig = s:DetermineParseConfig(getline(a:lineno))
 	let l:data = s:ParseDocData(a:lineno, l:parseconfig)
+	let l:data["author"] = g:pdv_cfg_Author
 	let l:docblock = s:GenerateDocumentation(l:parseconfig, l:data)
 
 	call append(a:lineno - 1, s:ApplyIndent(l:docblock, l:data["indent"]))
